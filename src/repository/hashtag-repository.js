@@ -1,13 +1,13 @@
-const Tweet = require('../models/tweet')
+const Hashtag = require('../models/hashtags')
 
-class TweetRepository {
+class HashtagRepository {
 
     constructor() {
 
     }
     async createTweet(tweet) {
         try {
-            const data = await Tweet.create(tweet);
+            const data = await Hashtag.create(tweet);
             return data;
         } catch (error) {
             console.log(error);
@@ -15,10 +15,19 @@ class TweetRepository {
         }
     }
 
+    async bulkcreate(data) {
+        try {
+            const tags = await Hashtag.insertMany(data);
+            return tags;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async readTweet(id) {
         try {
-            const data = await Tweet.findById(id).populate({path:'comments'});
-            return data;
+            const tag = await Hashtag.findById(id);
+            return tag;
         } catch (error) {
             console.log(error);
             throw error;
@@ -35,14 +44,16 @@ class TweetRepository {
         }
     }
 
-    async getAll(offset, limit){
+    async getbyname(data) {
         try {
-            const tweet = await Tweet.find().skip(offset).limit(limit);
-            return tweet;
+            const tags = await Hashtag.find({
+                title: data
+            })
+            return tags;
         } catch (error) {
             console.log(error);
         }
     }
 }
 
-module.exports = TweetRepository
+module.exports = HashtagRepository
