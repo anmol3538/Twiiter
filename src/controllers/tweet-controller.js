@@ -23,7 +23,7 @@ const createTweet = async (req, res) => {
 
 const gettweet = async (req, res) => {
     try {
-       const response = await tweetservice.get(req.params.id);
+       const response = await tweetservice.get(req.query.id);
        return res.status(200).json({
             success: true,
             message: 'Successfully fetched a tweet',
